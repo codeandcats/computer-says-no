@@ -1,2 +1,12 @@
 # computer-says-no
-Simple error management in TypeScript
+Super simple type-safe and serializable error management in TypeScript.
+
+# Install
+```sh
+npm add computer-says-no
+```
+
+```sh
+yarn add computer-says-no
+```
+
