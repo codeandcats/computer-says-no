@@ -3,7 +3,7 @@ module.exports = {
   collectCoverage: true,
   coverageDirectory: "./coverage",
   coverageProvider: "v8",
-  coverageReporters: ["lcov"],
+  coverageReporters: ["lcov", "text"],
   coverageThreshold: {
     global: {
       branches: 100,
