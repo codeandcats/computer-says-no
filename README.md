@@ -1,5 +1,9 @@
-# computer-says-no
-Super simple type-safe and serializable error management in TypeScript.
+<p align="center">
+  <img width="500" src="./img/logo.svg" />
+</p>
+<p align="center">
+  Super simple type-safe and serializable error management in TypeScript & JavaScript.
+</p>
 
 # Install
 ```sh
