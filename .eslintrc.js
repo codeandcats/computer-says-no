@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'plugin:jest/recommended'],
+  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'plugin:jest/recommended', 'prettier'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'prettier', 'eslint-plugin-jest'],
   settings: {
@@ -23,6 +23,7 @@ module.exports = {
     'no-console': 'error',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     'max-classes-per-file': ['error', 2],
     'max-len': ['error', 120],
     'import/extensions': [
