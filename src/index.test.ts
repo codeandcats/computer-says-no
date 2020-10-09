@@ -1,36 +1,39 @@
 import * as ta from 'type-assertions';
 
-import { defineException } from '.';
+import { defineError } from '.';
 
 describe('defineException', () => {
   it('defines an exception with the given code', () => {
-    const NotFoundError = defineException('NOT_FOUND', () => 'Not found');
+    const NotFoundError = defineError('NOT_FOUND', () => 'Not found');
 
     expect(NotFoundError.code).toEqual('NOT_FOUND');
   });
 
   it('allows you to create an exception from the definition', () => {
-    const NotFoundError = defineException('NOT_FOUND', () => 'Not found');
+    const NotFoundError = defineError('NOT_FOUND', () => 'Not found');
+    const error = NotFoundError();
 
-    const error = NotFoundError.create();
     expect(error.code).toEqual('NOT_FOUND');
     expect(error.message).toEqual('Not found');
   });
 
-  it('allows you to create an exception from the definition using the shorter syntax', () => {
-    const NotFoundError = defineException('NOT_FOUND', () => 'Not found');
+  it('allows you to create an exception from the definition using new', () => {
+    const NotFoundError = defineError('NOT_FOUND', () => 'Not found');
+    const error = new NotFoundError();
 
-    const error = NotFoundError();
     expect(error.code).toEqual('NOT_FOUND');
     expect(error.message).toEqual('Not found');
   });
 
   it('allows you to create an exception from the definition that takes parameters', () => {
-    const ValueRequiredError = defineException('VALUE_REQUIRED', (fieldName: string, fieldDisplayName: string) => ({
-      message: `${fieldDisplayName} is required`,
-      fieldName,
-      fieldDisplayName,
-    }));
+    const ValueRequiredError = defineError(
+      'VALUE_REQUIRED',
+      (fieldName: string, fieldDisplayName: string) => ({
+        message: `${fieldDisplayName} is required`,
+        fieldName,
+        fieldDisplayName,
+      }),
+    );
 
     const error = ValueRequiredError('emailAddress', 'E-mail');
     expect(error.code).toEqual('VALUE_REQUIRED');
@@ -40,20 +43,23 @@ describe('defineException', () => {
   });
 
   it('correctly identifies the type of an error', () => {
-    const NotFoundError = defineException('NOT_FOUND', () => 'Not found');
-    const AccessDeniedError = defineException('ACCESS_DENIED', () => 'Access denied');
+    const NotFoundError = defineError('NOT_FOUND', () => 'Not found');
+    const AccessDeniedError = defineError(
+      'ACCESS_DENIED',
+      () => 'Access denied',
+    );
 
-    const error = AccessDeniedError.create();
+    const error = AccessDeniedError();
 
     expect(NotFoundError.is(error)).toEqual(false);
     expect(AccessDeniedError.is(error)).toEqual(true);
   });
 
-  it('correctly identifies the type of an error after its been serialized and deserialized', () => {
-    const NotFoundError = defineException('NOT_FOUND', () => 'Not found');
-    const AccessDeniedError = defineException('ACCESS_DENIED', () => 'Access denied');
+  it('correctly identifies the type of an error even after its been serialized and deserialized', () => {
+    const NotFoundError = defineError('NOT_FOUND', () => 'Not found');
+    const AccessDeniedError = defineError('ACCESS_DENIED', () => 'Access denied');
 
-    const errorBefore = AccessDeniedError.create();
+    const errorBefore = AccessDeniedError();
 
     expect(NotFoundError.is(errorBefore)).toEqual(false);
     expect(AccessDeniedError.is(errorBefore)).toEqual(true);
@@ -66,10 +72,13 @@ describe('defineException', () => {
 
   // eslint-disable-next-line jest/expect-expect
   it('correctly infers properties available on an error based on its asserted type', () => {
-    const UserNotFoundError = defineException('USER_NOT_FOUND', (username: string) => ({
-      message: 'User not found',
-      username,
-    }));
+    const UserNotFoundError = defineError(
+      'USER_NOT_FOUND',
+      (username: string) => ({
+        message: 'User not found',
+        username,
+      }),
+    );
 
     const someUnknownError: unknown = undefined;
 

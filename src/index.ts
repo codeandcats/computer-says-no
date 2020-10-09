@@ -1,41 +1,60 @@
-type BaseExceptionBody = { message: string } | string;
+type Dictionary = { [K: string]: unknown };
 
-export type Exception<TCode extends string, TExceptionBody extends BaseExceptionBody> = TExceptionBody extends string
-  ? { code: TCode; message: TExceptionBody }
-  : TExceptionBody & { code: TCode };
+type BaseErrorBody = { message: string } | string;
 
-export interface ExceptionConstructor<
+type BaseError<
   TCode extends string,
-  TArguments extends any[],
-  TExceptionBody extends BaseExceptionBody
-> {
-  (...args: TArguments): Exception<TCode, TExceptionBody>;
-  create: (...args: TArguments) => Exception<TCode, TExceptionBody>;
+  TBody extends BaseErrorBody
+> = {
   code: TCode;
-  is(err: any): err is Exception<TCode, TExceptionBody>;
+} & (
+  TBody extends string
+    ? { message: TBody }
+    : TBody
+);
+
+interface BaseErrorClass<
+  TCode extends string,
+  TArgs extends unknown[],
+  TBody extends BaseErrorBody
+> {
+  (...args: TArgs): BaseError<TCode, TBody>;
+  new (...args: TArgs): BaseError<TCode, TBody>;
+  code: TCode;
+  is(err: unknown): err is BaseError<TCode, TBody>;
 }
 
-export function defineException<
+export function defineError<
   TCode extends string,
-  TArguments extends any[],
-  TExceptionBody extends BaseExceptionBody
+  TArgs extends unknown[],
+  TBody extends BaseErrorBody
 >(
   code: TCode,
-  create: (...args: TArguments) => TExceptionBody,
-): ExceptionConstructor<TCode, TArguments, TExceptionBody> {
-  const exceptionConstructor: ExceptionConstructor<TCode, TArguments, TExceptionBody> = (...args: TArguments) => {
-    const innerBody = create(...args);
-    const body =
-      typeof innerBody === 'string' ? { message: innerBody } : (innerBody as Exclude<typeof innerBody, string>);
-    const result = {
-      ...body,
-      code,
-    } as Exception<TCode, TExceptionBody>;
-    return result;
-  };
-  exceptionConstructor.create = exceptionConstructor;
-  exceptionConstructor.code = code;
-  exceptionConstructor.is = ((err: any) => err && err.code === code) as any;
+  create: (...args: TArgs) => TBody
+) {
+  function ErrorConstructor(this: BaseError<TCode, TBody>, ...args: TArgs) {
+    const body = create(...args);
+    const bodyNormalised = { ...(typeof body === 'string' ? { message: body } : body as Exclude<TBody, string>), code };
 
-  return exceptionConstructor;
+    if (new.target) {
+      Object.keys(bodyNormalised).forEach((key) => {
+        (this as Dictionary)[key] = (bodyNormalised as Dictionary)[key];
+      });
+      return this;
+    }
+
+    return bodyNormalised;
+  }
+  ErrorConstructor.code = code;
+  ErrorConstructor.is = (err: unknown): err is BaseError<TCode, TBody> => {
+    const baseError = err as BaseError<TCode, TBody>;
+    return baseError && baseError.code === code;
+  };
+
+  Object.defineProperty(ErrorConstructor, 'name', {
+    value: 'Foo',
+    writable: false
+  });
+
+  return ErrorConstructor as BaseErrorClass<TCode, TArgs, TBody>;
 }
