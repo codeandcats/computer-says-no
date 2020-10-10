@@ -53,7 +53,7 @@ Now we can write our login function. Notice we are returning the errors rather t
 ```typescript
 function login(emailAddress: string, password: string) {
   if (!emailAddress) {
-    return new FieldRequiredError('Email')
+    return new FieldRequiredError('Email');
   }
 
   if (!password) {
@@ -78,7 +78,7 @@ Note the return type of our login function will be (more or less):
 | { authToken: string }
 ```
 
-This makes it easy to check which result we got back when we call our login function:
+This makes it easy to check which result we got back when we call our login function (ignore the `alert` calls, this is just an example 😛).
 
 ```typescript
 import { isError } from 'computer-says-no';
