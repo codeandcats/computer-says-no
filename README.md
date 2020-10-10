@@ -1,5 +1,7 @@
 <p align="center">
-  <img width="500" src="./img/logo.svg" />
+  <a href="https://www.youtube.com/watch?v=sX6hMhL1YsQ" target="_blank">
+    <img width="500" src="./img/logo.svg" />
+  </a>
 </p>
 <p align="center">
   Super simple type-safe and serializable error management in TypeScript & JavaScript.
