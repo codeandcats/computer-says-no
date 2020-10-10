@@ -1,6 +1,6 @@
 {
   "name": "computer-says-no",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Super simple type-safe and serializable error management in TypeScript.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +10,8 @@
     "test": "npm run test:lint && npm run test:unit && npm run test:typecheck",
     "test:typecheck": "tsc --noEmit",
     "test:lint": "eslint ./src",
-    "test:unit": "jest"
+    "test:unit": "jest",
+    "ship": "npm run build && npm run test && standard-version"
   },
   "repository": {
     "type": "git",
@@ -52,6 +53,7 @@
     "husky": "4.3.0",
     "jest": "26.5.2",
     "react": "16.13.1",
+    "standard-version": "9.0.0",
     "ts-jest": "26.4.1",
     "type-assertions": "1.1.0",
     "typescript": "4.0.3"
