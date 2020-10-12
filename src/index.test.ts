@@ -8,6 +8,10 @@ describe('defineError', () => {
     expect(NotFoundError.code).toEqual('NOT_FOUND');
   });
 
+  it('defines an error with a name based on the code', () => {
+    expect(defineError('NOT_FOUND').name).toEqual('NotFoundError');
+  });
+
   it('allows you to create an error from the definition', () => {
     const NotFoundError = defineError('NOT_FOUND');
     const error = NotFoundError();

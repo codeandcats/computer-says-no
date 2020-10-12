@@ -1,3 +1,5 @@
+import { pascal } from 'case';
+
 const CFN_ERROR_IDENTIFIER = '$$cfn';
 
 type Dictionary = { [K: string]: unknown };
@@ -58,6 +60,10 @@ type BaseErrorDefinition<
       }
   )
 );
+
+function errorCodeToClassName(code: string) {
+  return `${pascal(code)}Error`;
+}
 
 function getErrorBody<
   TCode extends string,
@@ -124,8 +130,8 @@ export function defineError<
   };
 
   Object.defineProperty(ErrorDefinition, 'name', {
-    value: 'Foo',
-    writable: false
+    value: errorCodeToClassName(code),
+    writable: false,
   });
 
   return ErrorDefinition as unknown as BaseErrorDefinition<TCode, TConstructor>;
