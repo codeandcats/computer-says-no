@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/codeandcats/computer-says-no/compare/v0.0.2...v0.0.3) (2020-10-12)
+
+
+### Bug Fixes
+
+* update ignore files for git and npm ([dbadc7d](https://github.com/codeandcats/computer-says-no/commit/dbadc7d084707d775ea870397e1bc48f3ac5424a))
+
 ### [0.0.2](https://github.com/codeandcats/computer-says-no/compare/v0.0.1...v0.0.2) (2020-10-12)
 
 
