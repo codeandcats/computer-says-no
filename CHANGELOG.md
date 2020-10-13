@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/codeandcats/computer-says-no/compare/v0.0.3...v0.0.4) (2020-10-13)
+
+
+### Bug Fixes
+
+* correct spelling of error signature property ([693a218](https://github.com/codeandcats/computer-says-no/commit/693a2180a732d2f3f8e6720c3b5acead5bf48df8))
+
 ### [0.0.3](https://github.com/codeandcats/computer-says-no/compare/v0.0.2...v0.0.3) (2020-10-12)
 
 
