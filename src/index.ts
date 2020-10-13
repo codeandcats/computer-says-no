@@ -46,7 +46,8 @@ type BaseErrorDefinition<
   TConstructor extends ErrorConstructor
 > = (
   {
-    code: TCode
+    code: TCode;
+    name: string;
     is(err: unknown): err is BaseError<TCode, TConstructor>;
   } & (
     TConstructor extends ((...args: any[]) => BaseErrorBody)
