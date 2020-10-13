@@ -83,7 +83,7 @@ This makes it easy to check which result we got back when we call our login func
 ```typescript
 import { isError } from 'computer-says-no';
 
-function handleLoginButtonClick() {
+function handleLoginSubmit() {
   const loginResult = login(emailAddress, password);
 
   if (isError(loginResult)) {
@@ -114,7 +114,7 @@ const FieldRequiredError = defineError(
 Now the `FieldRequiredError` will include a `fieldName` property. Let's update our login handler function.
 
 ```typescript
-function handleLoginButtonClick() {
+function handleLoginSubmit() {
   const loginResult = login(emailAddress, password);
 
   if (FieldRequiredError.is(loginResult)) {
@@ -131,6 +131,41 @@ function handleLoginButtonClick() {
   alert('Login successful');
 }
 ```
+
+## But why?
+
+Why not just create `Error` sub-classes and use the `instanceof` operator instead?
+
+```typescript
+class FieldRequiredError extends Error {
+    constructor(readonly fieldName: string) {
+        super(`${fieldName} is required`);
+    }
+}
+
+...
+
+function handleLoginSubmit() {
+  const loginResult = login(emailAddress, password);
+
+  if (loginResult instanceof FieldRequiredError) {
+    const input = document.getElementById(loginResult.fieldName);
+    input.focus();
+  }
+
+  if (loginResult instanceof Error) {
+    alert(loginResult.message);
+    return;
+  }
+
+  localStorage.setItem('authToken', loginResult.authToken);
+  alert('Login successful');
+}
+```
+
+Well, the above is pretty elegant and requires no library. But sadly it doesn't scale if you're working on a monorepo and return errors from your API that you need to check for in your client. The `instanceof` operator will stop working. 
+
+This is where `computer-says-no` shines. Errors can be serialized to JSON and parsed back into plain old JS objects and all the type assertions will still work.
 
 ## Contributing
 Got an issue or a feature request? [Log it](https://github.com/codeandcats/computer-says-no/issues).
