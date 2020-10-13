@@ -1,6 +1,6 @@
 import { pascal } from 'case';
 
-const CFN_ERROR_IDENTIFIER = '$$cfn';
+const CFN_ERROR_IDENTIFIER = '$csn$';
 
 type Dictionary = { [K: string]: unknown };
 
