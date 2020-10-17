@@ -18,5 +18,5 @@ jobs:
       - run: npm run build
       - run: git config user.name github-actions
       - run: git config user.email github-actions@github.com
-      - run: standard-version --color=always | awk '! /Run.+to publish/'
+      - run: $(npm bin)/standard-version --color=always | awk '! /Run.+to publish/'
       - run: git push --follow-tags origin master  
