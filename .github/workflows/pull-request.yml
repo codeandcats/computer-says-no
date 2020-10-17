@@ -1,9 +1,9 @@
-name: Build Release
+name: Verify PR
 
 on: pull_request
 
 jobs:
-  build-release:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
