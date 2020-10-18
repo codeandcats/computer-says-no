@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 0.1.0 (2020-10-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* Fields defined in error constructor will be automatically serialized and parsed
+on error creation now. This means fields like Date objects will become strings, and fields
+that are functions will be removed. This helps enforce the fact early on that errors should
+be serializable. The types already prevented users from passing in non-serializable fields, so
+this change will only effect users who are intentionally using `any` when defining error bodies
+to circumvent the type system.
+
+### Features
+
+* error body must now be serializable ([bf476a3](https://github.com/codeandcats/computer-says-no/commit/bf476a3a95bd8b0c09113c73cd1f69be366492f4))
+
 ### 0.0.12 (2020-10-18)
 
 ### 0.0.11 (2020-10-18)

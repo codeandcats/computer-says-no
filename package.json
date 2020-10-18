@@ -1,6 +1,6 @@
 {
   "name": "computer-says-no",
-  "version": "0.0.12",
+  "version": "0.1.0",
   "description": "Super simple type-safe and serializable error management in TypeScript.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
