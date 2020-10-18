@@ -6,6 +6,11 @@
 <p align="center">
   Super simple type-safe and serializable error management in TypeScript & JavaScript.
 </p>
+<p align="center">
+  <a href="https://www.npmjs.com/package/computer-says-no"><img alt="npm" src="https://img.shields.io/npm/v/computer-says-no?color=lime-green&style=flat" alt="NPM" /></a>
+  <a href="https://github.com/codeandcats/computer-says-no/actions"><img alt="GitHub Workflow Status (branch)" src="https://img.shields.io/github/workflow/status/codeandcats/computer-says-no/Build%20and%20Ship%20Release/master" alt="Build status"></a>
+  <a href="https://coveralls.io/github/codeandcats/computer-says-no?branch=master"><img alt="Coveralls github branch" src="https://img.shields.io/coveralls/github/codeandcats/computer-says-no/master" alt="Code coverage"></a>
+</p>
 
 ## Install
 ```sh
