@@ -30,6 +30,11 @@ jobs:
       - name: 🔬 Run Tests
         run: npm test
 
+      - name: ⬆️ Upload Code Coverage
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
   build-release:
     runs-on: ubuntu-latest
     needs: test
