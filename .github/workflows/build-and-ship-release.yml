@@ -100,7 +100,7 @@ jobs:
       - name: 📦 Publish to NPM
         run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   publish-gpr:
     needs: build-release
@@ -111,7 +111,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-          registry-url: https://npm.pkg.github.com/
+          registry-url: https://npm.pkg.github.com/${{ github.repository_owner }}
 
       - name: Cache node modules
         uses: actions/cache@v2
@@ -134,4 +134,4 @@ jobs:
       - name: 📦 Publish to Github Packages
         run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
