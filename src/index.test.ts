@@ -51,20 +51,17 @@ describe('defineError', () => {
   });
 
   it('allows you to create an error from a definition that takes parameters', () => {
-    const ValueRequiredError = defineError(
-      'VALUE_REQUIRED',
-      (fieldName: string, fieldDisplayName: string) => ({
-        message: `${fieldDisplayName} is required`,
-        fieldName,
-        fieldDisplayName,
-      })
-    );
+    const ValueRequiredError = defineError('VALUE_REQUIRED', (fieldName: string, fieldDisplayName: string) => ({
+      message: `${fieldDisplayName} is required`,
+      fieldName,
+      fieldDisplayName,
+    }));
 
     type ExpectedType = {
-      code: 'VALUE_REQUIRED',
-      message: string,
-      fieldName: string,
-      fieldDisplayName: string
+      code: 'VALUE_REQUIRED';
+      message: string;
+      fieldName: string;
+      fieldDisplayName: string;
     };
 
     const error1 = ValueRequiredError('emailAddress', 'E-mail');
@@ -86,7 +83,7 @@ describe('defineError', () => {
   it('correctly identifies the type of an error', () => {
     const NotFoundError = defineError('NOT_FOUND', () => 'Not found');
     const AccessDeniedError = defineError('ACCESS_DENIED', 'Access denied');
-    
+
     const error = AccessDeniedError();
     expect(NotFoundError.is(error)).toEqual(false);
     expect(AccessDeniedError.is(error)).toEqual(true);
@@ -153,7 +150,7 @@ describe('defineError', () => {
       expect(error.code).toEqual('INVALID_EMAIL_ADDRESS');
       expect(error.emailAddress).toEqual('foo');
       expect(error.message).toEqual('Invalid E-mail "foo"');
-    }
+    };
 
     let error1: any;
     try {
@@ -171,6 +168,28 @@ describe('defineError', () => {
       error2 = err;
     }
     checkError(error2);
+  });
+
+  it('automatically serializes and parses all custom error fields', () => {
+    const getUser = () => ({
+      name: 'rsanchez',
+      firstName: 'Rick',
+      lastName: 'Sanchez',
+    });
+    const attemptDate = new Date();
+    const message = 'Unauthorized';
+
+    // Have to cast to `any` here to intentionally circumvent typing that otherwise
+    // prevents us from using types that do not serialize, just so we can test
+    const body = { getUser, attemptDate, message } as any;
+
+    const UnauthorizedError = defineError('UNAUTHORIZED', body);
+
+    const error = new UnauthorizedError();
+
+    expect(error).not.toHaveProperty('getUser');
+    expect(typeof error.attemptDate).toEqual('string');
+    expect(error).toHaveProperty('message', 'Unauthorized');
   });
 });
 

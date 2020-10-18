@@ -109,11 +109,17 @@ export function defineError<
     this: BaseError<TCode, TConstructor>,
     ...args: Args
   ) {
-    const body = typeof create === 'function'
-      ? getErrorBody(code, create as (...a: any[]) => BaseErrorBody, args)
-      : getErrorBody(code, create as BaseErrorBody);
+    let body =
+      typeof create === 'function'
+        ? getErrorBody(code, create as (...a: any[]) => BaseErrorBody, args)
+        : getErrorBody(code, create as BaseErrorBody);
 
-    (body as any)[CFN_ERROR_IDENTIFIER] = 1;
+    body = JSON.parse(
+      JSON.stringify({
+        ...(body as Record<string, SerializableValue>),
+        [CFN_ERROR_IDENTIFIER]: 1,
+      }),
+    );
 
     if (new.target) {
       Object.keys(body).forEach((key) => {
