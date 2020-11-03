@@ -1,6 +1,6 @@
 import { pascal } from 'case';
 
-const CSN_ERROR_SIGNATURE_KEY = '__csn__' as const;
+const CSN_ERROR_SIGNATURE_KEY = 'csn' as const;
 const CSN_ERROR_SIGNATURE_VALUE = 1 as const;
 
 type Dictionary = { [K: string]: unknown };

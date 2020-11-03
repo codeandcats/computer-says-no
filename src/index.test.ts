@@ -58,7 +58,7 @@ describe('defineError', () => {
     }));
 
     type ExpectedType = {
-      __csn__: 1;
+      csn: 1;
       code: 'VALUE_REQUIRED';
       message: string;
       fieldName: string;
@@ -126,7 +126,7 @@ describe('defineError', () => {
     if (UserNotFoundError.is(someUnknownError)) {
       // Now we know exactly what the shape of the error is
       type ExpectedType = {
-        __csn__: 1;
+        csn: 1;
         code: 'USER_NOT_FOUND';
         message: string;
         username: string;

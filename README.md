@@ -172,6 +172,11 @@ Well, the above is pretty elegant and requires no library. But sadly it doesn't 
 
 This is where `computer-says-no` shines. Errors can be serialized to JSON and parsed back into plain old JS objects and all the type assertions will still work.
 
+## Using with GraphQL / Rest APIs
+Errors instantiated by `computer-says-no` will include a property named `csn`. This is a signature the library includes that is essential for internally asserting that an error is a `computer-says-no` error.
+
+You don't normally need to worry about it, except that this property must be included during any serialization. For example when resolving errors in GraphQL you must be sure GraphQL knows about and includes the `csn` property on the error type it resolves.
+
 ## Contributing
 Got an issue or a feature request? [Log it](https://github.com/codeandcats/computer-says-no/issues).
 
