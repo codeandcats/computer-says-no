@@ -1,6 +1,7 @@
 import { pascal } from 'case';
 
-const CFN_ERROR_IDENTIFIER = '$csn$';
+const CSN_ERROR_SIGNATURE_KEY = '__csn__' as const;
+const CSN_ERROR_SIGNATURE_VALUE = 1 as const;
 
 type Dictionary = { [K: string]: unknown };
 
@@ -19,7 +20,7 @@ export type BaseErrorBody = Record<string, SerializableValue> | string;
 type ErrorConstructor = BaseErrorBody | ((...args: any[]) => BaseErrorBody) | undefined;
 
 type GetBaseErrorBody<TConstructor extends ErrorConstructor> = (
-  TConstructor extends (...args: any[]) => BaseErrorBody
+  (TConstructor extends (...args: any[]) => BaseErrorBody
     ? (
       ReturnType<TConstructor> extends string
         ? { message: ReturnType<TConstructor> }
@@ -34,6 +35,9 @@ type GetBaseErrorBody<TConstructor extends ErrorConstructor> = (
             : TConstructor
         )
     )
+  ) & {
+    [CSN_ERROR_SIGNATURE_KEY]: typeof CSN_ERROR_SIGNATURE_VALUE;
+  }
 );
 
 export type BaseError<
@@ -117,7 +121,7 @@ export function defineError<
     body = JSON.parse(
       JSON.stringify({
         ...(body as Record<string, SerializableValue>),
-        [CFN_ERROR_IDENTIFIER]: 1,
+        [CSN_ERROR_SIGNATURE_KEY]: CSN_ERROR_SIGNATURE_VALUE,
       }),
     );
 
@@ -155,7 +159,7 @@ export function isError<
 ): value is BaseError<TCode, TConstructor>;
 
 export function isError(value: unknown, definition?: BaseErrorDefinition<any, any>): boolean {
-  const isCsnError = value && (value as any)[CFN_ERROR_IDENTIFIER];
+  const isCsnError = value && (value as any)[CSN_ERROR_SIGNATURE_KEY];
   if (!isCsnError) {
     return false;
   }
