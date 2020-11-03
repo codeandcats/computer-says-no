@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 0.3.0 (2020-11-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* Renamed  property to simply .
+
+### Features
+
+* once again rename the signature property to something graphql is happy with ([64509b4](https://github.com/codeandcats/computer-says-no/commit/64509b45d835eb96fe0e75d25489b0f9c4e218a0))
+
 ## 0.2.0 (2020-11-03)
 
 
