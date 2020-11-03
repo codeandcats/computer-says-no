@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 0.2.0 (2020-11-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* Exposes __csn__ property on error type, replaces $ property
+
+### Features
+
+* change error signature to __csn__ and expose in error type ([47f379a](https://github.com/codeandcats/computer-says-no/commit/47f379afbb466caa72251cc886c5d35fc3072d70))
+
 ### 0.1.1 (2020-10-18)
 
 ## 0.1.0 (2020-10-18)
